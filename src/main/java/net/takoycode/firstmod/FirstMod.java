@@ -1,7 +1,11 @@
 package net.takoycode.firstmod;
 
 import com.mojang.logging.LogUtils;
+import net.minecraft.client.renderer.BiomeColors;
+import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.level.GrassColor;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
@@ -12,6 +16,8 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.takoycode.firstmod.block.ModBlocks;
+import net.takoycode.firstmod.item.ModItems;
 import org.slf4j.Logger;
 
 // The value here should match an entry in the META-INF/mods.toml file
@@ -34,6 +40,9 @@ public class FirstMod
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
 
+        ModItems.register(modEventBus);
+        ModBlocks.register(modEventBus);
+
         // Register the item to a creative tab
         modEventBus.addListener(this::addCreative);
 
@@ -49,7 +58,14 @@ public class FirstMod
     // Add the example block item to the building blocks tab
     private void addCreative(BuildCreativeModeTabContentsEvent event)
     {
-
+        if(event.getTabKey() == CreativeModeTabs.INGREDIENTS){
+            event.accept(ModItems.DIRTRITE);
+            event.accept(ModItems.DIRTRITE_NUGGET);
+        }
+        if(event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS){
+            event.accept(ModBlocks.DIRT_SLAB);
+            event.accept(ModBlocks.GRASS_SLAB);
+        }
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call
@@ -63,6 +79,18 @@ public class FirstMod
     @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ClientModEvents
     {
-
+        @SubscribeEvent
+        public static void registerBlockColors(RegisterColorHandlersEvent.Block event){
+            event.getBlockColors().register(((pState, pLevel, pPos, pTintIndex) -> {
+                System.out.println("Grass slab tint requested - Index: " + pTintIndex); // Debug line
+                if(pTintIndex == 0 ){
+                    if (pLevel != null && pPos != null){
+                        return BiomeColors.getAverageGrassColor(pLevel, pPos);
+                    }
+                    return GrassColor.get(0.5D, 1.0D);
+                }
+                return -1;
+            }), ModBlocks.GRASS_SLAB.get());
+        }
     }
 }
