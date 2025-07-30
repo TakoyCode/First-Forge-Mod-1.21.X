@@ -2,6 +2,8 @@ package net.takoycode.firstmod;
 
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.renderer.BiomeColors;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.level.GrassColor;
 import net.minecraftforge.api.distmarker.Dist;
@@ -14,6 +16,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.takoycode.firstmod.block.ModBlocks;
@@ -82,15 +85,31 @@ public class FirstMod
         @SubscribeEvent
         public static void registerBlockColors(RegisterColorHandlersEvent.Block event){
             event.getBlockColors().register(((pState, pLevel, pPos, pTintIndex) -> {
-                System.out.println("Grass slab tint requested - Index: " + pTintIndex); // Debug line
                 if(pTintIndex == 0 ){
                     if (pLevel != null && pPos != null){
                         return BiomeColors.getAverageGrassColor(pLevel, pPos);
                     }
-                    return GrassColor.get(0.5D, 1.0D);
+                  return GrassColor.getDefaultColor();
                 }
                 return -1;
             }), ModBlocks.GRASS_SLAB.get());
+        }
+
+        @SubscribeEvent
+        public static void registerItemColors(RegisterColorHandlersEvent.Item event){
+            event.getItemColors().register(((pStack, pTintIndex) -> {
+                if(pTintIndex == 0) {
+                    return GrassColor.getDefaultColor();
+                }
+                return -1;
+            }), ModBlocks.GRASS_SLAB.get());
+        }
+
+        @SubscribeEvent
+        public static void onClientSetup(FMLClientSetupEvent event) {
+            event.enqueueWork(() -> {
+                ItemBlockRenderTypes.setRenderLayer(ModBlocks.GRASS_SLAB.get(), RenderType.cutoutMipped());
+            });
         }
     }
 }
