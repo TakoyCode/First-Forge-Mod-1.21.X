@@ -1,6 +1,9 @@
 {
   "item.firstmod.dirtrite": "Dirtrite",
   "item.firstmod.dirtrite_nugget": "Dirtrite Nugget",
+
+  "block.firstmod.dravel": "Dravel",
+
   "block.firstmod.dirt_slab": "Dirt Slab",
   "block.firstmod.grass_slab": "Grass Slab"
 }

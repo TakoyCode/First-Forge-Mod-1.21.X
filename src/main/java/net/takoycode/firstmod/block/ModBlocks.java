@@ -19,9 +19,8 @@ public class ModBlocks {
     public static final DeferredRegister<Block> BLOCKS =
             DeferredRegister.create(ForgeRegistries.BLOCKS, FirstMod.MOD_ID);
 
-//    public static final RegistryObject<Block> DIRT_SLAB = registerBlock("dirt_slab",
-//            ()-> new Block(BlockBehaviour.Properties.of()
-//                    .strength(1f).sound(SoundType.GRAVEL)));
+    public static final  RegistryObject<Block> DRAVEL = registerBlock("dravel",
+            () -> new Block(BlockBehaviour.Properties.of().strength(3f).sound(SoundType.GRAVEL)));
 
     public static final RegistryObject<SlabBlock> DIRT_SLAB = registerBlock("dirt_slab",
             ()-> new SlabBlock(BlockBehaviour.Properties.of()

@@ -68,6 +68,7 @@ public class FirstMod
         if(event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS){
             event.accept(ModBlocks.DIRT_SLAB);
             event.accept(ModBlocks.GRASS_SLAB);
+            event.accept(ModBlocks.DRAVEL);
         }
     }
 
