@@ -20,6 +20,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.takoycode.firstmod.block.ModBlocks;
+import net.takoycode.firstmod.item.ModCreativeModeTabs;
 import net.takoycode.firstmod.item.ModItems;
 import org.slf4j.Logger;
 
@@ -42,6 +43,8 @@ public class FirstMod
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
+
+        ModCreativeModeTabs.register(modEventBus);
 
         ModItems.register(modEventBus);
         ModBlocks.register(modEventBus);

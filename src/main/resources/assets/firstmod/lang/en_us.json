@@ -5,5 +5,8 @@
   "block.firstmod.dravel": "Dravel",
 
   "block.firstmod.dirt_slab": "Dirt Slab",
-  "block.firstmod.grass_slab": "Grass Slab"
+  "block.firstmod.grass_slab": "Grass Slab",
+
+  "creativetab.firstmod.firstmod_items": "Firstmod Items",
+  "creativetab.firstmod.firstmod_blocks": "Firstmod Blocks"
 }
