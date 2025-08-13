@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "firstmod:dirtrite"
+    },
+    "B": {
+      "item": "minecraft:short_grass"
+    }
+  },
+  "pattern": [
+    "BBB",
+    "AAA"
+  ],
+  "result": {
+    "count": 3,
+    "id": "firstmod:grass_slab"
+  }
+}
